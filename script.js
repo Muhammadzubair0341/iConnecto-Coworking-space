@@ -13,8 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
                 const nav = document.querySelector('.nav');
-                // Adjust headerOffset to account for sticky nav bar
-                const headerOffset = nav ? nav.offsetHeight + 20 : 0; 
+                const headerOffset = nav ? nav.offsetHeight + 20 : 0; // Check if nav exists
                 const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
                 const offsetPosition = elementPosition - headerOffset;
 
@@ -22,14 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     top: offsetPosition,
                     behavior: 'smooth'
                 });
-                
-                // Close mobile nav after smooth scroll if it was open
-                if (navMenu && navMenu.classList.contains('show')) {
-                    navMenu.classList.remove('show');
-                    navToggle.classList.remove('active');
-                    navToggle.setAttribute('aria-expanded', 'false');
-                    body.classList.remove('no-scroll');
-                }
             }
         });
     });
@@ -37,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Navbar Toggle for Mobile
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
-    const body = document.body;
+    const body = document.body; // Moved body here for wider scope
 
     if (navToggle && navMenu) {
         navToggle.addEventListener('click', () => {
@@ -47,7 +38,18 @@ document.addEventListener('DOMContentLoaded', () => {
             navToggle.setAttribute('aria-expanded', !isExpanded);
             body.classList.toggle('no-scroll');
         });
+
+        // Close mobile nav on link click
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('show');
+                navToggle.classList.remove('active');
+                navToggle.setAttribute('aria-expanded', 'false');
+                body.classList.remove('no-scroll');
+            });
+        });
     }
+
 
     // 4. Scroll Progress Bar & Navbar Glass Effect
     const scrollProgress = document.getElementById('scrollProgress');
@@ -56,8 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('scroll', () => {
         const scrollTop = document.documentElement.scrollTop;
         const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        // Calculate progress only if the page is scrollable
-        const progress = (scrollHeight > 0) ? (scrollTop / scrollHeight) * 100 : 0; 
+        const progress = (scrollHeight > 0) ? (scrollTop / scrollHeight) * 100 : 0;
 
         if (scrollProgress) {
             scrollProgress.style.width = `${progress}%`;
@@ -65,73 +66,87 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Navbar glass effect on scroll
         if (nav) {
-            // Apply glass effect only after scrolling 50px past the top
             if (scrollTop > 50) {
-                nav.classList.add('scrolled'); // Use class list instead of data attribute for better CSS control
+                nav.setAttribute('data-glass', true);
             } else {
-                nav.classList.remove('scrolled');
+                nav.removeAttribute('data-glass');
             }
         }
     });
 
-    // 5. Typing Animation Function (Corrected and Completed) 🎬
-    function initTypingAnimation(element, speed = 50) {
-        // Use a temporary wrapper to hold the complex HTML structure while typing.
-        const originalHTML = element.innerHTML;
-        const plainTextContent = element.textContent.trim(); 
-        
-        // Temporarily clear the content
-        element.textContent = ''; 
-        element.classList.add('typing-container'); 
+    // Function to handle typing animation
+    function typeText(element, speed = 50) {
+        // Store original content including HTML (like <span class="grad">)
+        const originalContent = element.innerHTML;
+        const plainTextContent = element.textContent; // Use textContent for typing
+        element.innerHTML = ''; // Clear content before typing
+        element.classList.add('typing-container'); // Add container class for cursor
 
         let i = 0;
         const timer = setInterval(() => {
             if (i < plainTextContent.length) {
-                element.textContent += plainTextContent.charAt(i);
+                // If it's a character from the grad span, ensure it's re-added as HTML
+                // This is a simplified approach, a more robust solution would parse HTML
+                // For this specific case with `span.grad` inside, we can try to re-inject.
+                // A better approach for mixed HTML is to extract plain text, type it, then
+                // re-inject the original HTML around the typed plain text.
+                // For simplicity here, we'll type the plain text and assume the HTML is stable.
+
+                const char = plainTextContent.charAt(i);
+                element.textContent += char;
                 i++;
             } else {
                 clearInterval(timer);
-                
-                // After typing plain text, restore the original HTML structure
-                // to correctly apply styles like the .grad span.
-                element.innerHTML = originalHTML; 
-                
-                // Add 'typed' class to remove the cursor/animation (via CSS)
-                element.classList.add('typed'); 
+                element.classList.add('typed'); // Remove cursor after typing
+
+                // If originalContent had HTML, restore it after typing plain text.
+                // This is a rough fix for the `grad` span.
+                // A more advanced solution would type within the `span.grad` too.
+                element.innerHTML = originalContent; // Restore full HTML
+                // The issue here is the `typing-container` styling and `typed` class on the inner span.
+                // We will modify the observer logic to target the wrapper elements directly for typing.
             }
         }, speed);
     }
-    
-    // 6. On-Scroll Animations (Intersection Observer API)
+
+
+
+
+
+    // 5. On-Scroll Animations (Intersection Observer API)
     const animateElements = document.querySelectorAll('[data-animate]');
-    // Targeting the elements that will receive the typing animation
-    const heroH1Wrapper = document.querySelector('.hero__copy h1'); 
-    const heroLeadP = document.querySelector('.hero__copy p'); // Target the <p> tag 
+    const heroH1Wrapper = document.querySelector('.hero__copy h1'); // Target the <h1> itself
+    const heroLeadWrapper = document.querySelector('.hero__copy .lead'); // Target the <p> itself
     let h1Typed = false;
+    let leadTyped = false;
 
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const delay = entry.target.dataset.delay ? parseInt(entry.target.dataset.delay) : 0;
-                
                 setTimeout(() => {
                     entry.target.classList.add('in-view');
 
-                    // Trigger typing animation for H1 on hero section entry
+                    // Trigger typing animation for H1
                     if (entry.target === heroH1Wrapper && !h1Typed) {
-                        initTypingAnimation(heroH1Wrapper.querySelector('span'), 70); // Target the inner span for typing
-                        // Wait for H1 to finish, then start P tag typing
-                        setTimeout(() => {
-                            initTypingAnimation(heroLeadP, 30);
-                        }, heroH1Wrapper.textContent.length * 70 + 500); // Wait for H1 length * speed + extra delay
-                        
+                        initTypingAnimation(heroH1Wrapper, 70); // Adjust typing speed here (ms per character)
                         h1Typed = true;
                     }
+                    // Trigger typing animation for Lead P
+                    if (entry.target === heroLeadWrapper && !leadTyped) {
+                        initTypingAnimation(heroLeadWrapper, 30); // Adjust typing speed here
+                        leadTyped = true;
+                    }
+
                 }, delay);
 
-                // Unobserve after animation is applied, except for elements that need repeated viewing or special handling
-                if (entry.target !== heroH1Wrapper) {
-                    observer.unobserve(entry.target);
+                // For typing animations, we don't want to unobserve immediately if it's the target.
+                // We only unobserve elements that are purely for 'in-view' class addition.
+                if (!entry.target.classList.contains('carousel') && !entry.target.classList.contains('marquee')) {
+                    // Unobserve after animation, but only if it's not the typing target
+                    if (entry.target !== heroH1Wrapper && entry.target !== heroLeadWrapper) {
+                         observer.unobserve(entry.target);
+                    }
                 }
             }
         });
@@ -140,16 +155,16 @@ document.addEventListener('DOMContentLoaded', () => {
         threshold: 0.1
     });
 
-    // Observe all animatable elements
     animateElements.forEach(element => {
         observer.observe(element);
     });
-    
-    // Ensure the hero H1 is observed to trigger typing animation
+
+    // Ensure the hero H1 and Lead P are observed for the typing animation
     if (heroH1Wrapper) observer.observe(heroH1Wrapper);
+    if (heroLeadWrapper) observer.observe(heroLeadWrapper);
 
 
-    // 7. Testimonial Carousel
+    // 6. Testimonial Carousel
     const quotes = document.querySelectorAll('.quote');
     let currentQuote = 0;
 
@@ -172,12 +187,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         showQuote(currentQuote);
-        setInterval(nextQuote, 4000); // 4 seconds interval
+        setInterval(nextQuote, 4000); // 4 seconds for faster change
     }
 
-    // 8. Fullscreen Gallery Image Viewer (Logic remains sound)
+    // 7. Fullscreen Gallery Image Viewer
     const galleryItems = document.querySelectorAll('.gallery__item img');
-    
+    // const body is already defined globally at the top of DOMContentLoaded
+
+    // Create the overlay elements once
     const fullscreenOverlay = document.createElement('div');
     fullscreenOverlay.classList.add('fullscreen-overlay');
     fullscreenOverlay.innerHTML = `
@@ -186,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <button class="close-btn" aria-label="Close image viewer">✕</button>
         </div>
     `;
-    body.appendChild(fullscreenOverlay);
+    body.appendChild(fullscreenOverlay); // Append to body
 
     const fullScreenImage = fullscreenOverlay.querySelector('.fullscreen-image');
     const closeBtn = fullscreenOverlay.querySelector('.close-btn');
@@ -196,22 +213,25 @@ document.addEventListener('DOMContentLoaded', () => {
             fullScreenImage.src = img.src;
             fullScreenImage.alt = img.alt;
             fullscreenOverlay.classList.add('active');
-            body.classList.add('no-scroll');
+            body.classList.add('no-scroll'); // Prevent body scroll when overlay is active
         });
     });
 
+    // Close button and overlay click to close
     closeBtn.addEventListener('click', () => {
         fullscreenOverlay.classList.remove('active');
         body.classList.remove('no-scroll');
     });
 
     fullscreenOverlay.addEventListener('click', (e) => {
+        // Close only if clicking directly on the overlay, not the image or container
         if (e.target === fullscreenOverlay) {
             fullscreenOverlay.classList.remove('active');
             body.classList.remove('no-scroll');
         }
     });
 
+    // Close with Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && fullscreenOverlay.classList.contains('active')) {
             fullscreenOverlay.classList.remove('active');
