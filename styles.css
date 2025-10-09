@@ -1092,16 +1092,31 @@ textarea {
 }
 
 /* Specific in-view animations */
+/* ✅ Animation containers ke liye overflow hide */
+[data-animate] {
+  overflow: hidden;
+  display: inline-block; /* ensures the box respects content size */
+}
+
+/* ✅ Reveal animation */
 .in-view[data-animate="reveal"] {
-    clip-path: inset(0 0 0 0);
-    transition: clip-path 1s var(--bezier-ease);
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 1s var(--bezier-ease);
+  overflow: hidden;
 }
+
+/* ✅ Zoom-in animation */
 .in-view[data-animate="zoom-in"] {
-    transform: scale(1);
+  transform: scale(1);
+  overflow: hidden;
 }
+
+/* ✅ Scale-in animation */
 .in-view[data-animate="scale-in"] {
-    transform: scale(1);
+  transform: scale(1);
+  overflow: hidden;
 }
+
 /* Note: fade-up/slide-up already handled by default [data-animate] and .in-view */
 
 
