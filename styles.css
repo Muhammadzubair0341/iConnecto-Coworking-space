@@ -399,150 +399,157 @@ a {
     color: #fff;
 }
 
+/* ================================
+   HERO VISUAL (Optimized Circles)
+================================ */
+
 .hero__visual {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem; /* Add padding for circle overflow */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  overflow: hidden; /* ✅ prevent outer overflow */
 }
 
 .img-circle {
-    position: f;
-    width: clamp(280px, 40vw, 500px); /* Responsive size for circle */
-    height: clamp(280px, 40vw, 500px);
-    border-radius: 50%;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(45deg, var(--primary), #4bd2ff);
-    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.1), /* Glow effect */
-                0 0 0 20px rgba(255, 255, 255, 0.05),
-                var(--shadow);
-    animation: pulseGlow 4s ease-in-out infinite alternate; /* This remains infinite and subtle */
+  width: clamp(260px, 38vw, 460px);
+  height: clamp(260px, 38vw, 460px);
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(45deg, var(--primary), #4bd2ff);
+  box-shadow:
+    0 0 0 8px rgba(255, 255, 255, 0.1),
+    0 0 0 16px rgba(255, 255, 255, 0.05),
+    var(--shadow);
+  animation: pulseGlow 4s ease-in-out infinite alternate;
 }
 
 .hero__img {
-    width: 95%; /* Adjust image size inside the circle */
-    height: 95%;
-    object-fit: cover;
-    border-radius: 50%; /* Make image circular */
-    border: 5px solid rgba(255, 255, 255, 0.2); /* Inner border for depth */
-    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+  width: 94%;
+  height: 94%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.5);
 }
 
-/* Animated circles - Fixed to stop after initial animation */
+/* 🌐 Animated Circles */
 .circle {
-    position: absolute;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    background: rgba(255, 255, 255, 0.02);
-    box-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
-    pointer-events: none;
-    z-index: -1; /* Behind image */
-    /* Changed to run once and stay at final state */
-    animation: spin 20s linear forwards;
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.02);
+  box-shadow: 0 0 10px rgba(138, 43, 226, 0.25);
+  pointer-events: none;
+  z-index: -1;
+  animation: spin 22s linear forwards;
 }
 
+/* ✅ Slightly reduced sizes */
 .circle--1 {
-    width: 600px;
-    height: 600px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(0deg);
-    animation-delay: 0s;
+  width: 520px;
+  height: 520px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation-delay: 0s;
 }
 
 .circle--2 {
-    width: 480px;
-    height: 480px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(0deg);
-    animation-delay: 2s;
-    animation-duration: 25s;
+  width: 420px;
+  height: 420px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation-delay: 2s;
+  animation-duration: 26s;
 }
 
 .circle--3 {
-    width: 720px;
-    height: 720px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(0deg);
-    animation-delay: 4s;
-    animation-duration: 30s;
+  width: 620px;
+  height: 620px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation-delay: 4s;
+  animation-duration: 30s;
 }
 
+/* ✅ Smooth spin animation */
 @keyframes spin {
-    from {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-    to {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
+/* ✅ Soft pulse glow for center circle */
 @keyframes pulseGlow {
-    0% {
-        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.1),
-                    0 0 0 20px rgba(255, 255, 255, 0.05),
-                    var(--shadow);
-    }
-    50% {
-        box-shadow: 0 0 0 12px rgba(255, 255, 255, 0.2),
-                    0 0 0 25px rgba(255, 255, 255, 0.1),
-                    0 0 0 35px rgba(138, 43, 226, 0.2), /* Subtle larger glow */
-                    var(--shadow);
-    }
-    100% {
-        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.1),
-                    0 0 0 20px rgba(255, 255, 255, 0.05),
-                    var(--shadow);
-    }
+  0% {
+    box-shadow:
+      0 0 0 8px rgba(255, 255, 255, 0.1),
+      0 0 0 16px rgba(255, 255, 255, 0.05),
+      var(--shadow);
+  }
+  50% {
+    box-shadow:
+      0 0 0 10px rgba(255, 255, 255, 0.2),
+      0 0 0 22px rgba(255, 255, 255, 0.1),
+      0 0 0 28px rgba(138, 43, 226, 0.15),
+      var(--shadow);
+  }
+  100% {
+    box-shadow:
+      0 0 0 8px rgba(255, 255, 255, 0.1),
+      0 0 0 16px rgba(255, 255, 255, 0.05),
+      var(--shadow);
+  }
 }
 
-
-/* blobs - adjusted for dark theme and animation - Fixed to stop after initial animation */
+/* ✅ Blobs background - also slightly reduced */
 .blob {
-    position: absolute;
-    filter: blur(80px); /* More blur */
-    pointer-events: none;
-    z-index: -2; /* Further back */
-    opacity: 0.6;
-    /* Changed to run once and stay at final state */
-    animation: float 10s ease-in-out forwards;
+  position: absolute;
+  filter: blur(70px);
+  pointer-events: none;
+  z-index: -2;
+  opacity: 0.55;
+  animation: float 10s ease-in-out forwards;
 }
 
 .blob--1 {
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle at 30% 30%, #8a2be2a0, transparent 60%); /* Primary color */
-    top: -150px;
-    left: -100px;
-    animation-delay: 0s;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle at 30% 30%, #8a2be2a0, transparent 60%);
+  top: -120px;
+  left: -90px;
 }
 
 .blob--2 {
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle at 70% 40%, #00b7ff80, transparent 60%); /* Accent color */
-    right: -150px;
-    bottom: -100px; /* Adjusted position */
-    animation-delay: 1.5s;
-    animation-duration: 12s;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle at 70% 40%, #00b7ff80, transparent 60%);
+  right: -120px;
+  bottom: -80px;
+  animation-delay: 1.5s;
+  animation-duration: 12s;
 }
 
 @keyframes float {
-    0% {
-        transform: translateY(0) scale(1);
-    }
-    50% {
-        transform: translateY(20px) scale(1.03);
-    }
-    100% {
-        transform: translateY(0) scale(1); /* Ensure it ends at original position */
-    }
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(18px) scale(1.03);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* ============ Sections ============ */
