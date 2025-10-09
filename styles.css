@@ -41,6 +41,8 @@ body {
     color: var(--text);
     line-height: 1.7; /* Slightly more spacious */
     overflow-x: hidden; /* Prevent horizontal scroll */
+    /* NEW: Add padding to prevent content from hiding behind the fixed navbar */
+    padding-top: 70px; 
 }
 body.no-scroll {
     overflow: hidden; /* For mobile nav / fullscreen image */
@@ -117,15 +119,20 @@ a {
 
 /* ============ Navbar ============ */
 .nav {
-    position: sticky;
+    /* NEW: Changed from sticky to fixed */
+    position: fixed; 
     top: 0;
-    z-index: 1000; /* Ensure high z-index for sticky behavior */
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Ensure high z-index for fixed behavior */
     backdrop-filter: saturate(180%) blur(15px); /* Stronger blur */
     border-bottom: 1px solid var(--border);
     transition: background var(--transition-speed) ease, backdrop-filter var(--transition-speed) ease; /* Smooth transition for glass effect */
+    height: 70px; /* Set a fixed height for the navbar */
 }
 
-.nav[data-glass] {
+/* Updated selector to use .scrolled class from JavaScript */
+.nav.scrolled {
     background: linear-gradient(180deg, #000000dd, #000000bb); /* Darker, more transparent */
 }
 
@@ -286,78 +293,32 @@ a {
     font-size: clamp(2.8rem, 5.5vw, 4.8rem);
     line-height: 1.1;
     margin: 0.8rem 0 1.5rem;
-    opacity: 0;
-    transform: translateX(-40px);
-    animation: slideReveal 4s ease-out forwards;
-    animation-delay: 0.3s;
     text-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
-    overflow: hidden;
+    /* NEW: Set initial state for typing to be invisible but allow space for layout */
+    opacity: 1; 
+    transform: none;
+    max-width: 650px; /* Added max-width to control wrapping on desktop/large mobile */
+    margin-inline: auto; /* Center on mobile */
 }
-
-/* Smooth left-to-right reveal */
-@keyframes slideReveal {
-    0% {
-        opacity: 0;
-        transform: translateX(-40px);
-        clip-path: inset(0 100% 0 0);
-    }
-    50% {
-        opacity: 1;
-        transform: translateX(-10px);
-        clip-path: inset(0 0 0 0);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-        clip-path: inset(0 0 0 0);
-    }
-}
-
-/* Optional refinement for scroll-triggered animation */
-.hero__copy h1[data-animate="fade-up"] {
-    opacity: 0;
-    transform: translateX(-30px);
-}
-
-.hero__copy h1[data-animate="fade-up"].in-view {
-    opacity: 1;
-    transform: translateX(0);
-    transition: opacity 1s ease, transform 1s ease;
-    transition-delay: 0.3s;
-}
-
-
-
-
-.grad {
-    background: linear-gradient(2deg, #a8b1ff, #4bd2ff);
-    font-size: smaller;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-.lead {
-    font-size: clamp(1.1rem, 2vw, 1.35rem); /* Larger lead text */
-    color: var(--muted);
-    line-height: 1.8;
-}
-/* General in-view animation for lead, adjusted to avoid conflict with typing */
-.hero__copy .lead[data-animate="fade-up"] {
-    transform: translateY(20px);
-    opacity: 0;
-}
-.hero__copy .lead[data-animate="fade-up"].in-view {
-    transform: translateY(0);
-    opacity: 1;
-    transition: opacity .8s ease, transform .8s var(--bezier-ease);
-    transition-delay: .5s; /* Slightly after H1 */
+/* Disable default animation for typing to take over */
+.hero__copy h1[data-animate] {
+    opacity: 1; 
+    transform: none;
+    transition: none;
 }
 
 
 /* Typing animation specific styles for the wrapper element (h1, p) */
-/* The JS will wrap the actual text content inside this */
-
+/* The element with the typing text/HTML goes here */
+.typing-container {
+    display: inline-block; /* Essential to contain cursor within text */
+    border-right: 3px solid var(--primary); /* Typing cursor */
+    animation: blink-caret .8s step-end infinite;
+    white-space: pre-wrap; /* Allow wrapping while maintaining original spacing */
+    overflow: hidden; /* Hide overflow during typing */
+    max-width: 100%; /* Important for small screens */
+    width: auto;
+}
 
 /* Keyframes for blinking cursor */
 @keyframes blink-caret {
@@ -366,10 +327,48 @@ a {
 }
 
 /* When typing is complete, remove the cursor animation */
-.typing-container.typed {
+.hero__copy h1 .typing-container.typed,
+.hero__copy p.typed {
     border-right: none;
     animation: none;
     white-space: normal; /* Allow text to wrap naturally after typing */
+}
+
+
+.grad {
+    background: linear-gradient(2deg, #a8b1ff, #4bd2ff);
+    /* Removed font-size: smaller; to keep H1 scale consistent */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero__copy p {
+    font-size: clamp(1.1rem, 2vw, 1.35rem); /* Larger lead text */
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 600px; /* Control max width for readability */
+    margin-inline: auto; /* Center on mobile */
+    /* NEW: Initial state for P tag before typing */
+    opacity: 0;
+    transform: translateY(20px);
+    transition: none; /* Disable default transition for typing */
+}
+.hero__copy p.in-view {
+    /* Restore animated state after typing starts, but let typing handle visibility */
+    opacity: 1; 
+    transform: translateY(0);
+}
+/* Reset for standard on-scroll elements */
+.hero__copy > [data-animate]:not(h1):not(p) {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .8s ease, transform .8s var(--bezier-ease);
+}
+.hero__copy > [data-animate]:not(h1):not(p).in-view {
+    opacity: 1;
+    transform: none;
+    transition-delay: .5s; /* Slightly after H1/P typing starts */
 }
 
 
@@ -402,7 +401,6 @@ a {
 }
 
 .img-circle {
-    position: f;
     width: clamp(280px, 40vw, 500px); /* Responsive size for circle */
     height: clamp(280px, 40vw, 500px);
     border-radius: 50%;
@@ -1152,6 +1150,7 @@ textarea {
 
     .hero__grid {
         grid-template-columns: 1fr;
+        /* NEW: Center align all text/content in the copy section on mobile */
         text-align: center;
     }
     .hero__cta {
@@ -1160,15 +1159,45 @@ textarea {
     .hero__stats {
         justify-content: center;
     }
-
+    
     .cta__grid {
         grid-template-columns: 1fr;
+    }
+}
+
+/* Dedicated fixes for small mobile screens (Samsung S8 is ~360px) */
+@media (max-width: 480px) {
+    /* Fix for Hero H1 font size on very small screens */
+    .hero__copy h1 {
+        font-size: 2.2rem;
+        max-width: 100%; /* Ensure max-width is applied */
+    }
+    
+    /* Fix for Pricing PKR 12,000 Overflow */
+    .price__value {
+        font-size: 2.2rem; /* Reduced font size to prevent overflow */
+    }
+    .price {
+        padding: 1.5rem; /* Reduced card padding */
+    }
+    
+    /* Center text within CTA copy on small screens */
+    .cta__copy {
+        text-align: center;
+    }
+    .contact__list {
+        text-align: left; /* Keep list items left-aligned for readability */
+        padding-left: 1rem;
     }
 }
 
 @media (min-width: 900px) {
     .hero__grid {
         grid-template-columns: 1.2fr 1fr;
+    }
+    /* Reset centering on desktop */
+    .hero__copy h1, .hero__copy p {
+        margin-inline: 0; 
     }
 
     .cta__grid {
