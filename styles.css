@@ -685,15 +685,21 @@ a {
 
 /* ============ Pricing ============ */
 .price__grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Larger min width */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     align-items: stretch;
+    gap: 2rem; /* small spacing between cards for mobile */
 }
 
 .price {
-    padding: 2.5rem; /* More padding */
-    border: 2px solid transparent; /* Highlight primary price */
+    padding: 2.2rem;
+    border: 2px solid transparent;
     position: relative;
+    border-radius: 1rem;
+    text-align: center; /* better alignment for narrow screens */
+    overflow: hidden; /* prevents overflow for large text */
+    word-wrap: break-word; /* allow wrapping for long content */
 }
+
 .price:first-of-type {
     border-color: var(--primary);
     box-shadow: 0 0 25px rgba(138, 43, 226, 0.4), var(--shadow);
@@ -709,9 +715,16 @@ a {
 
 .price__value {
     font-weight: 900;
-    font-size: 2.8rem; /* Larger price value */
+    font-size: 2.5rem; /* slightly reduced for balance */
     margin: .6rem 0 1.5rem;
     color: var(--primary);
+    line-height: 1.1;
+    display: flex;
+    flex-wrap: wrap; /* wraps if text is too wide */
+    justify-content: center;
+    align-items: baseline;
+    gap: 0.2rem;
+    text-align: center;
 }
 
 .price__value .cur {
@@ -732,17 +745,30 @@ a {
 }
 
 .price .list li {
-    padding: .6rem 0; /* More padding */
+    padding: .6rem 0;
     color: #cfd3ff;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: .8rem;
     font-size: 1.05rem;
 }
+
 .price .list li::before {
-    content: '✅'; /* Checkmark icon */
+    content: '✅';
     font-size: 1.2em;
 }
+
+/* ✅ Responsive fix for small screens */
+@media (max-width: 480px) {
+    .price__value {
+        font-size: 2rem; /* reduce font size */
+    }
+    .price {
+        padding: 1.8rem;
+    }
+}
+
 
 
 /* ============ Gallery ============ */
