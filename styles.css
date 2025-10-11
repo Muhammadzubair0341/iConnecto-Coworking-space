@@ -41,8 +41,6 @@ body {
     color: var(--text);
     line-height: 1.7; /* Slightly more spacious */
     overflow-x: hidden; /* Prevent horizontal scroll */
-    /* NEW: Add padding to prevent content from hiding behind the fixed navbar */
-    padding-top: 70px; 
 }
 body.no-scroll {
     overflow: hidden; /* For mobile nav / fullscreen image */
@@ -551,6 +549,7 @@ a {
     transform: translateY(0) scale(1);
   }
 }
+
 
 /* ============ Sections ============ */
 .section {
@@ -1099,31 +1098,16 @@ textarea {
 }
 
 /* Specific in-view animations */
-/* ✅ Animation containers ke liye overflow hide */
-[data-animate] {
-  overflow: hidden;
-  display: inline-block; /* ensures the box respects content size */
-}
-
-/* ✅ Reveal animation */
 .in-view[data-animate="reveal"] {
-  clip-path: inset(0 0 0 0);
-  transition: clip-path 1s var(--bezier-ease);
-  overflow: hidden;
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 1s var(--bezier-ease);
 }
-
-/* ✅ Zoom-in animation */
 .in-view[data-animate="zoom-in"] {
-  transform: scale(1);
-  overflow: hidden;
+    transform: scale(1);
 }
-
-/* ✅ Scale-in animation */
 .in-view[data-animate="scale-in"] {
-  transform: scale(1);
-  overflow: hidden;
+    transform: scale(1);
 }
-
 /* Note: fade-up/slide-up already handled by default [data-animate] and .in-view */
 
 
@@ -1180,7 +1164,6 @@ textarea {
 
     .hero__grid {
         grid-template-columns: 1fr;
-        /* NEW: Center align all text/content in the copy section on mobile */
         text-align: center;
     }
     .hero__cta {
@@ -1188,17 +1171,6 @@ textarea {
     }
     .hero__stats {
         justify-content: center;
-    }
-    
-    /* NEW: Dedicated fix for very small screens (like Tecno Spark 20C) */
-    @media (max-width: 480px) {
-        /* Fix for Pricing PKR 12,000 Overflow */
-        .price__value {
-            font-size: 2.2rem; /* Reduced font size to prevent overflow */
-        }
-        .price {
-            padding: 1.5rem; /* Reduced card padding */
-        }
     }
 
     .cta__grid {
