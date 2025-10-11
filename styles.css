@@ -117,29 +117,33 @@ a {
 
 /* ============ Navbar ============ */
 .nav {
-    /* NEW: Changed from sticky to fixed */
-    position: fixed; 
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000; /* Ensure high z-index for fixed behavior */
-    backdrop-filter: saturate(180%) blur(15px); /* Stronger blur */
+    z-index: 1000;
+    backdrop-filter: saturate(180%) blur(15px);
     border-bottom: 1px solid var(--border);
-    transition: background var(--transition-speed) ease, backdrop-filter var(--transition-speed) ease; /* Smooth transition for glass effect */
-    height: 70px; /* Set a fixed height for the navbar */
+    transition: background var(--transition-speed) ease, backdrop-filter var(--transition-speed) ease;
+    height: 70px;
+    display: flex;
+    align-items: center; /* ✅ Centers everything vertically */
 }
 
 .nav[data-glass] {
-    background: linear-gradient(180deg, #000000dd, #000000bb); /* Darker, more transparent */
+    background: linear-gradient(180deg, #000000dd, #000000bb);
 }
 
 .nav__inner {
     display: flex;
-    align-items: center;
+    align-items: center; /* ✅ Vertically centers logo + links */
     justify-content: space-between;
-    padding: 1rem 0; /* More padding */
+    width: 100%;
+    padding: 0 2rem; /* ✅ Equal padding left/right */
+    height: 100%; /* ✅ Ensures perfect centering */
 }
 
+/* ===== Brand ===== */
 .brand {
     display: flex;
     align-items: center;
@@ -159,9 +163,9 @@ a {
     font-weight: 900;
     color: #fff;
     box-shadow: var(--shadow);
-    /* Animation for logo */
     transform: scale(0);
     animation: logoPopIn .6s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+    overflow: hidden; /* ✅ No overflow glitch */
 }
 .brand__logo img {
     width: 70%;
@@ -170,54 +174,56 @@ a {
 }
 
 .brand__name {
-    font-size: 1.3rem; /* Larger brand name */
+    font-size: 1.3rem;
     background: linear-gradient(90deg, #fff, var(--primary));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    /* Animation for name - SLOWED DOWN */
-    overflow: hidden; /* Hide text before reveal */
-    animation: textReveal 1.5s ease forwards; /* Increased duration to 1.5s */
-    animation-delay: .4s; /* Start after logo, slightly more delay */
+    overflow: hidden;
+    animation: textReveal 1.5s ease forwards;
+    animation-delay: .4s;
 }
 
-/* Keyframes for brand animation */
+/* ===== Brand Animations ===== */
 @keyframes logoPopIn {
     0% { transform: scale(0); opacity: 0; }
     80% { transform: scale(1.1); opacity: 1; }
     100% { transform: scale(1); opacity: 1; }
 }
-
 @keyframes textReveal {
-    from {
-        clip-path: inset(0 100% 0 0);
-    }
-    to {
-        clip-path: inset(0 0 0 0);
-    }
+    from { clip-path: inset(0 100% 0 0); }
+    to { clip-path: inset(0 0 0 0); }
 }
 
-
+/* ===== Nav Links ===== */
 .nav__links {
     display: flex;
     align-items: center;
-    gap: 1.5rem; /* More space between links */
+    gap: 1.5rem;
 }
 
 .nav__links a {
-    opacity: .95;
-    padding: .8rem 1rem;
-    border-radius: 12px;
-    transition: background var(--transition-speed) ease, opacity var(--transition-speed) ease, color var(--transition-speed) ease;
+    position: relative;
+    padding: .7rem 1rem;
+    border-radius: 10px;
     font-weight: 600;
+    opacity: .95;
+    color: #fff;
+    transition: all var(--transition-speed) ease;
+    overflow: hidden; /* ✅ Prevents glow overflow */
 }
 
-.nav__links a:hover {
-    background: rgba(138, 43, 226, 0.2); /* Primary color hover */
+/* ✅ Hover + Active Effects */
+.nav__links a:hover,
+.nav__links a.active {
+    background: rgba(138, 43, 226, 0.2);
+    border: 1px solid var(--primary); /* ✅ Added border on hover/active */
+    box-shadow: 0 0 12px rgba(138, 43, 226, 0.4);
     opacity: 1;
     color: #fff;
 }
 
+/* ===== Toggle (Mobile) ===== */
 .nav__toggle {
     display: none;
     background: none;
@@ -231,7 +237,6 @@ a {
     background: #ffffff22;
 }
 
-
 .nav__bar {
     display: block;
     width: 28px;
@@ -241,7 +246,6 @@ a {
     transition: transform var(--transition-speed) ease, opacity var(--transition-speed) ease;
 }
 
-/* Toggle menu animation */
 .nav__toggle.active .nav__bar:nth-child(1) {
     transform: translateY(9px) rotate(45deg);
 }
@@ -252,15 +256,15 @@ a {
     transform: translateY(-9px) rotate(-45deg);
 }
 
-
-/* Scroll progress */
+/* ===== Scroll Progress ===== */
 .progress {
     position: absolute;
     inset: auto 0 0 0;
-    height: 3px; /* Thicker progress bar */
+    height: 3px;
     background: linear-gradient(90deg, var(--primary), #4bd2ff);
     width: 0%;
 }
+
 
 /* ============ Hero ============ */
 .hero {
@@ -967,6 +971,7 @@ a {
 
 .acc[open] summary {
     color: var(--primary);
+
 }
 .acc[open] summary::after {
     content: '-'; /* Custom minus icon */
