@@ -1,28 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- ========== META & BASIC INFO ========== -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>iConnecto Coworking Space</title>
     <meta name="description" content="Premium coworking in Pakistan. Get office space starting at 500 PKR/day. No security deposit." />
+
+    <!-- ========== FONTS & STYLES ========== -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css" />
+
+    <!-- ========== SCRIPTS ========== -->
     <script defer src="script.js"></script>
 </head>
-<body>
 
+<body>
+    <!-- ========================================================= -->
+    <!-- ========== NAVBAR / HEADER SECTION ======================= -->
+    <!-- ========================================================= -->
     <header class="nav" data-glass>
         <div class="container nav__inner">
+
+            <!-- Brand Logo & Name -->
             <a class="brand" href="#hero" aria-label="iconnecto home">
-                <span class="brand__logo" aria-hidden="true"><img src="images/logo_iconnacto.png" alt="iConnecto Logo"></span>
+                <span class="brand__logo" aria-hidden="true">
+                    <img src="images/logo_iconnacto.png" alt="iConnecto Logo">
+                </span>
                 <span class="brand__name">iConnecto</span>
             </a>
 
+            <!-- Responsive Navigation Toggle Button -->
             <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
                 <span class="nav__bar"></span><span class="nav__bar"></span><span class="nav__bar"></span>
             </button>
 
+            <!-- Primary Navigation Links -->
             <nav class="nav__links" id="navMenu" aria-label="Primary">
                 <a href="#features">Features</a>
                 <a href="#pricing">Pricing</a>
@@ -31,27 +45,43 @@
                 <a href="#contact">Contact</a>
             </nav>
         </div>
+
+        <!-- Scroll Progress Bar -->
         <div class="progress" id="scrollProgress" aria-hidden="true"></div>
     </header>
 
+    <!-- ========================================================= -->
+    <!-- ========== HERO SECTION ================================= -->
+    <!-- ========================================================= -->
     <section id="hero" class="hero">
+        <!-- Decorative Background Blobs & Circles -->
         <div class="blob blob--1"></div>
         <div class="blob blob--2"></div>
-
         <div class="circle circle--1"></div>
         <div class="circle circle--2"></div>
         <div class="circle circle--3"></div>
 
         <div class="container hero__grid">
+            <!-- Hero Text Content -->
             <div class="hero__copy" data-animate="slide-up">
                 <span class="eyebrow">Coworking reinvented</span>
-                <h1><span>Work better at <span class="grad">iConnecto Coworking Space</span></span></h1>
-                 <p>   Get office space starting at <strong>500 PKR/day</strong>.<u>No security deposit</u>. Premium amenities, flexible access, and thoughtful design.
+                <h1>
+                    <span>Work better at 
+                        <span class="grad">iConnecto Coworking Space</span>
+                    </span>
+                </h1>
+                <p>
+                    Get office space starting at <strong>500 PKR/day</strong>. 
+                    <u>No security deposit</u>. Premium amenities, flexible access, and thoughtful design.
                 </p>
+
+                <!-- Hero Call-to-Action Buttons -->
                 <div class="hero__cta">
                     <a href="#pricing" class="btn btn--primary">See Pricing</a>
                     <a href="#contact" class="btn btn--ghost">Schedule a Visit</a>
                 </div>
+
+                <!-- Hero Quick Stats -->
                 <ul class="hero__stats">
                     <li><strong>24/7</strong> Access</li>
                     <li><strong>Fast</strong> Internet</li>
@@ -59,11 +89,12 @@
                 </ul>
             </div>
 
+            <!-- Hero Visual / Image -->
             <figure class="hero__visual" data-animate="zoom-in" data-delay="200">
                 <div class="img-circle">
                     <img
                         src="images/logo_iconnacto.png"
-                        alt="Payoneer financial platform visual"
+                        alt="iConnecto workspace visual"
                         loading="eager"
                         class="hero__img"
                     />
@@ -73,7 +104,9 @@
         </div>
     </section>
 
-
+    <!-- ========================================================= -->
+    <!-- ========== FEATURES SECTION ============================== -->
+    <!-- ========================================================= -->
     <section id="features" class="section">
         <div class="container">
             <header class="section__head" data-animate="fade-up">
@@ -81,6 +114,7 @@
                 <p class="muted">Thoughtful amenities, premium comfort, and productivity-first spaces.</p>
             </header>
 
+            <!-- Feature Cards Grid -->
             <div class="grid features__grid">
                 <article class="card feature" data-animate="slide-up">
                     <div class="icon">⚡</div>
@@ -97,7 +131,7 @@
                 <article class="card feature" data-animate="slide-up" data-delay="200">
                     <div class="icon">🤝</div>
                     <h3>Meeting Rooms</h3>
-                    <p>Bookable rooms , whiteboards, and seamless casting.</p>
+                    <p>Bookable rooms, whiteboards, and seamless casting.</p>
                 </article>
 
                 <article class="card feature" data-animate="slide-up" data-delay="300">
@@ -109,8 +143,12 @@
         </div>
     </section>
 
+    <!-- ========================================================= -->
+    <!-- ========== MARQUEE / PERKS STRIP ========================= -->
+    <!-- ========================================================= -->
     <section class="marquee" aria-label="Perks" data-animate="fade-in">
         <div class="marquee__track">
+            <!-- Continuous Scrolling Perks -->
             <span>Fast Wi-Fi</span>
             <span>Quiet Zones</span>
             <span>Lockers</span>
@@ -118,6 +156,7 @@
             <span>Community Events</span>
             <span>Daily Cleaning</span>
             <span>Security</span>
+            <!-- Repeated for seamless loop -->
             <span>Fast Wi-Fi</span>
             <span>Quiet Zones</span>
             <span>Lockers</span>
@@ -128,6 +167,9 @@
         </div>
     </section>
 
+    <!-- ========================================================= -->
+    <!-- ========== PRICING SECTION =============================== -->
+    <!-- ========================================================= -->
     <section id="pricing" class="section alt">
         <div class="container">
             <header class="section__head" data-animate="fade-up">
@@ -135,6 +177,7 @@
                 <p class="muted">Start today. No contracts. No deposit.</p>
             </header>
 
+            <!-- Pricing Cards -->
             <div class="grid price__grid">
                 <article class="card price" data-animate="scale-in">
                     <h3>Day Pass</h3>
@@ -159,42 +202,49 @@
                 </article>
             </div>
 
-            <p class="tiny centered" data-animate="fade-up">*All plans include taxes. Student &amp; team discounts available.</p>
+            <p class="tiny centered" data-animate="fade-up">
+                *All plans include taxes. Student &amp; team discounts available.
+            </p>
         </div>
     </section>
 
+    <!-- ========================================================= -->
+    <!-- ========== GALLERY SECTION =============================== -->
+    <!-- ========================================================= -->
     <section id="gallery" class="section">
         <div class="container">
             <header class="section__head" data-animate="fade-up">
                 <h2>Peek inside our space</h2>
             </header>
 
+            <!-- Image Grid -->
             <div class="grid gallery__grid">
                 <figure class="gallery__item" data-animate="zoom-in">
-                    <img src="images/1.jpg"
-                        alt="Open plan coworking desks" loading="lazy">
+                    <img src="images/1.jpg" alt="Open plan coworking desks" loading="lazy">
                 </figure>
                 <figure class="gallery__item" data-animate="zoom-in" data-delay="80">
-                    <img src="images/2.jpg"
-                        alt="Private meeting room" loading="lazy">
+                    <img src="images/2.jpg" alt="Private meeting room" loading="lazy">
                 </figure>
                 <figure class="gallery__item" data-animate="zoom-in" data-delay="140">
-                    <img src="images/4.jpg"
-                        alt="Lounge area" loading="lazy">
+                    <img src="images/4.jpg" alt="Lounge area" loading="lazy">
                 </figure>
                 <figure class="gallery__item" data-animate="zoom-in" data-delay="220">
-                    <img src="images/3.jpg"
-                        alt="Modern office setup" loading="lazy">
+                    <img src="images/3.jpg" alt="Modern office setup" loading="lazy">
                 </figure>
             </div>
         </div>
     </section>
 
+    <!-- ========================================================= -->
+    <!-- ========== TESTIMONIALS / REVIEWS ======================== -->
+    <!-- ========================================================= -->
     <section class="section alt" id="testimonials">
         <div class="container">
             <header class="section__head" data-animate="fade-up">
                 <h2>Loved by freelancers & teams</h2>
             </header>
+
+            <!-- Testimonials Carousel -->
             <div class="carousel" data-animate="fade-in">
                 <blockquote class="quote active">
                     “Quiet, fast internet, and excellent coffee. My productivity doubled.”
@@ -216,16 +266,20 @@
         </div>
     </section>
 
+    <!-- ========================================================= -->
+    <!-- ========== FAQ SECTION ================================== -->
+    <!-- ========================================================= -->
     <section id="faq" class="section">
         <div class="container">
             <header class="section__head" data-animate="fade-up">
                 <h2>Frequently asked questions</h2>
             </header>
 
+            <!-- FAQ Accordion -->
             <div class="accordion">
                 <details class="acc" data-animate="slide-up">
                     <summary>Do I need to pay a security deposit?</summary>
-                    <p>No deposit required. Pay only for the plan you choose, whether it's a day pass or a monthly membership.</p>
+                    <p>No deposit required. Pay only for the plan you choose, whether it's a day pass or monthly membership.</p>
                 </details>
 
                 <details class="acc" data-animate="slide-up" data-delay="60">
@@ -240,37 +294,43 @@
 
                 <details class="acc" data-animate="slide-up" data-delay="180">
                     <summary>What are your operating hours?</summary>
-                    <p>Our monthly members enjoy 24/7 access. Day pass holders can access the space during standard business hours, 9 AM to 6 PM, Monday to Friday.</p>
+                    <p>Monthly members enjoy 24/7 access. Day pass holders can access the space 9 AM to 6 PM, Monday–Friday.</p>
                 </details>
             </div>
         </div>
     </section>
 
-   <section id="contact" class="section cta">
-    <div class="container cta__grid" data-glass>
-        <div class="cta__copy" data-animate="fade-up">
-            <h2>Ready to get started?</h2>
-            <p class="muted">Tell us your preferred dates and we’ll confirm availability within hours.</p>
+    <!-- ========================================================= -->
+    <!-- ========== CONTACT / CTA SECTION ========================= -->
+    <!-- ========================================================= -->
+    <section id="contact" class="section cta">
+        <div class="container cta__grid" data-glass>
+            <div class="cta__copy" data-animate="fade-up">
+                <h2>Ready to get started?</h2>
+                <p class="muted">Tell us your preferred dates and we’ll confirm availability within hours.</p>
 
-            <ul class="contact__list">
-                <li>
-                    <strong>📞 Phone:</strong> 
-                    <span>+92 325 8068012</span>
-                </li>
-                <li>
-                    <strong>✉️ Email:</strong> 
-                    <a href="mailto:info@iconnecto.net">info@iconnecto.net</a>
-                </li>
-                <li>
-                    <strong>📍 Address:</strong> 
-                    <em>Fatima Computer Market, Kachery Road, Civil Line, Gujranwala</em>
-                </li>
-            </ul>
+                <!-- Contact Info List -->
+                <ul class="contact__list">
+                    <li>
+                        <strong>📞 Phone:</strong> 
+                        <span>+92 325 8068012</span>
+                    </li>
+                    <li>
+                        <strong>✉️ Email:</strong> 
+                        <a href="mailto:info@iconnecto.net">info@iconnecto.net</a>
+                    </li>
+                    <li>
+                        <strong>📍 Address:</strong> 
+                        <em>Fatima Computer Market, Kachery Road, Civil Line, Gujranwala</em>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-
+    <!-- ========================================================= -->
+    <!-- ========== FOOTER SECTION ================================ -->
+    <!-- ========================================================= -->
     <footer class="footer">
         <div class="container footer__inner">
             <p>© <span id="year"></span> iConnecto. All rights reserved.</p>
@@ -278,6 +338,7 @@
         </div>
     </footer>
 
+    <!-- Live Region for Accessibility Announcements -->
     <span class="visually-hidden" id="live" aria-live="polite"></span>
 </body>
 </html>

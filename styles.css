@@ -1,67 +1,90 @@
-/* ============ Design Tokens ============ */
+/* ====================================
+   | Theme: Dark, Neon, Glassmorphism |
+   ==================================== */
+
+/* ============ 1. Design Tokens (CSS Variables) ============ */
 :root {
-    --bg: #000000; /* Pure black background */
-    --bg-alt: #0a0a0a;
-    --text: #e0e0e0;
-    --muted: #a0a0a0;
-    --primary: #8a2be2; /* Deep purple */
-    --primary-2: #4b0082; /* Darker purple */
-    --card: #1c1c1c;
-    --glass: rgba(255, 255, 255, .08);
-    --border: rgba(255, 255, 255, .1);
-    --shadow: 0 15px 40px rgba(0, 0, 0, .6);
-    --radius: 24px; /* Slightly larger radius */
-    --transition-speed: 0.3s; /* Global transition speed */
-    --bezier-ease: cubic-bezier(0.16, 1, 0.3, 1); /* Smooth ease-out effect */
+    /* Color Palette */
+    --bg: #000000;          /* Main background: Pure black for contrast */
+    --bg-alt: #0a0a0a;      /* Slightly lighter black for subtle separation */
+    --text: #e0e0e0;        /* Light grey for main body text */
+    --muted: #a0a0a0;       /* Muted grey for secondary text/hints */
+    --primary: #8a2be2;     /* Accent color: Blue Violet (neon-like) */
+    --primary-2: #4b0082;   /* Secondary accent: Indigo for gradients */
+    --card: #1c1c1c;        /* Card/surface background */
+
+    /* Effects & Metrics */
+    --glass: rgba(255, 255, 255, .08);  /* Subtle white transparency for glass effect */
+    --border: rgba(255, 255, 255, .1);  /* Subtle border color */
+    --shadow: 0 15px 40px rgba(0, 0, 0, .6); /* Deep, dark shadow for depth */
+    --radius: 24px;         /* Standard border radius for cards and containers */
+
+    /* Animation & Timing */
+    --transition-speed: 0.3s; /* Standard transition duration */
+    --bezier-ease: cubic-bezier(0.16, 1, 0.3, 1); /* Custom smooth/springy easing curve */
 }
 
-/* ============ Base ============ */
+/* ============ 2. Base Styling & Reset ============ */
+/* Universal box model reset for predictable sizing */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+/* Set body/html to full viewport height */
 html,
 body {
     height: 100%;
 }
 
+/* Enable smooth scrolling for in-page anchors */
 html {
     scroll-behavior: smooth;
 }
 
+/* Base Body Styles */
 body {
+    /* Font Stack: Modern, clean system fonts with Inter as primary */
     font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    
+    /* Background: Primary black with subtle, fixed radial gradients for a "space" effect */
     background: radial-gradient(circle at 15% -5%, #8a2be244 0%, transparent 50%),
                 radial-gradient(circle at 105% 15%, #00b7ff22 0%, transparent 50%),
                 var(--bg);
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-attachment: fixed; /* Ensures gradient stays in place on scroll */
+    
     color: var(--text);
-    line-height: 1.7; /* Slightly more spacious */
-    overflow-x: hidden; /* Prevent horizontal scroll */
-}
-body.no-scroll {
-    overflow: hidden; /* For mobile nav / fullscreen image */
+    line-height: 1.7; /* Increased line height for readability on dark background */
+    overflow-x: hidden; /* Prevents horizontal scroll from off-screen elements/blobs */
 }
 
+/* Utility class to disable scrolling (e.g., when a mobile menu is open) */
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* Image optimization */
 img {
     max-width: 100%;
     display: block;
 }
 
+/* Anchor tag reset */
 a {
     color: inherit;
     text-decoration: none;
 }
 
+/* Standardized content container */
 .container {
-    max-width: 1200px; /* Larger container */
-    width: 90%;
-    margin-inline: auto;
+    max-width: 1200px; /* Max content width */
+    width: 90%; /* Responsive width for smaller screens */
+    margin-inline: auto; /* Center the container */
 }
 
+/* Accessibility: Visually hide content while keeping it available for screen readers */
 .visually-hidden {
     position: absolute;
     left: -9999px;
@@ -74,76 +97,98 @@ a {
     border: 0;
 }
 
-/* ============ Buttons ============ */
+/* ============ 3. Buttons ============ */
 .btn {
+    /* Flex layout for icon and text alignment */
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: .8rem;
-    padding: 1.1rem 1.6rem; /* Larger padding */
-    border-radius: 999px;
+    
+    /* Sizing & Shape */
+    padding: 1.1rem 1.6rem;
+    border-radius: 999px; /* Pill shape */
+    
+    /* Appearance (Glass effect on default button) */
     border: 1px solid var(--border);
     background: linear-gradient(180deg, #ffffff15, #ffffff0a);
     color: var(--text);
-    font-weight: 700; /* Bolder font */
-    letter-spacing: .5px; /* More prominent letter spacing */
+    
+    /* Typography */
+    font-weight: 700;
+    letter-spacing: .5px;
+    font-size: 1.05rem;
+    
+    /* 3D and Performance */
     box-shadow: 0 6px 20px rgba(0, 0, 0, .4);
-    transform: translateZ(0);
+    transform: translateZ(0); /* Hardware acceleration trick */
+    
+    /* Transitions for smooth interaction */
     transition: transform var(--transition-speed) ease, box-shadow 0.4s ease, background var(--transition-speed) ease;
-    font-size: 1.05rem; /* Larger font size */
 }
 
+/* Hover effects: lift and subtle scale */
 .btn:hover {
-    transform: translateY(-4px) scale(1.02); /* More pronounced lift and slight scale */
+    transform: translateY(-4px) scale(1.02);
     box-shadow: 0 15px 30px rgba(0, 0, 0, .6);
 }
 
+/* Primary Button: Solid accent color */
 .btn--primary {
     background: linear-gradient(135deg, var(--primary), var(--primary-2));
     border-color: transparent;
 }
 
+/* Ghost Button: Outline style */
 .btn--ghost {
     background: transparent;
-    border-color: var(--primary); /* Ghost button border */
+    border-color: var(--primary);
     color: var(--primary);
 }
+/* Ghost Hover: subtle background and white border/text for contrast */
 .btn--ghost:hover {
-    background: rgba(138, 43, 226, 0.1); /* Subtle hover for ghost */
+    background: rgba(138, 43, 226, 0.1);
     color: #fff;
     border-color: #fff;
 }
 
 
-/* ============ Navbar ============ */
+/* ============ 4. Navbar ============ */
 .nav {
+    /* Fixed position with high z-index to stay on top */
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
+    
+    /* Glassmorphism effect */
     backdrop-filter: saturate(180%) blur(15px);
     border-bottom: 1px solid var(--border);
+    
+    /* Sizing and alignment */
     transition: background var(--transition-speed) ease, backdrop-filter var(--transition-speed) ease;
     height: 70px;
     display: flex;
-    align-items: center; /* ✅ Centers everything vertically */
+    align-items: center; /* Vertically centers content within the nav */
 }
 
+/* State for when the nav becomes less transparent (on scroll) */
 .nav[data-glass] {
     background: linear-gradient(180deg, #000000dd, #000000bb);
 }
 
 .nav__inner {
+    /* Layout: Logo on left, links on right */
     display: flex;
-    align-items: center; /* ✅ Vertically centers logo + links */
+    align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 0 2rem; /* ✅ Equal padding left/right */
-    height: 100%; /* ✅ Ensures perfect centering */
+    padding: 0 2rem;
+    height: 100%; /* Important for vertical centering via parent flex container */
 }
 
-/* ===== Brand ===== */
+/* ===== Brand (Logo + Name) ===== */
 .brand {
     display: flex;
     align-items: center;
@@ -153,6 +198,7 @@ a {
     font-size: 1.2rem;
 }
 
+/* Brand Logo Styling and Pop-in Animation */
 .brand__logo {
     width: 40px;
     height: 40px;
@@ -163,9 +209,11 @@ a {
     font-weight: 900;
     color: #fff;
     box-shadow: var(--shadow);
+    
+    /* Initial state for logoPopIn animation */
     transform: scale(0);
-    animation: logoPopIn .6s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
-    overflow: hidden; /* ✅ No overflow glitch */
+    animation: logoPopIn .6s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; /* Springy bounce */
+    overflow: hidden;
 }
 .brand__logo img {
     width: 70%;
@@ -173,29 +221,35 @@ a {
     object-fit: contain;
 }
 
+/* Brand Name Styling and Text Reveal Animation */
 .brand__name {
     font-size: 1.3rem;
+    /* Gradient text effect */
     background: linear-gradient(90deg, #fff, var(--primary));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    
+    /* Initial state for textReveal animation */
     overflow: hidden;
     animation: textReveal 1.5s ease forwards;
     animation-delay: .4s;
 }
 
 /* ===== Brand Animations ===== */
+/* Logo Pop In: starts small, overshoots, then settles */
 @keyframes logoPopIn {
     0% { transform: scale(0); opacity: 0; }
     80% { transform: scale(1.1); opacity: 1; }
     100% { transform: scale(1); opacity: 1; }
 }
+/* Text Reveal: uses clip-path to simulate text typing/unveiling */
 @keyframes textReveal {
     from { clip-path: inset(0 100% 0 0); }
     to { clip-path: inset(0 0 0 0); }
 }
 
-/* ===== Nav Links ===== */
+/* ===== Nav Links (Desktop) ===== */
 .nav__links {
     display: flex;
     align-items: center;
@@ -210,22 +264,22 @@ a {
     opacity: .95;
     color: #fff;
     transition: all var(--transition-speed) ease;
-    overflow: hidden; /* ✅ Prevents glow overflow */
+    overflow: hidden; /* Important for containing hover glow/shadow */
 }
 
-/* ✅ Hover + Active Effects */
+/* Hover/Active Effects: Accent background, border, and glow */
 .nav__links a:hover,
 .nav__links a.active {
     background: rgba(138, 43, 226, 0.2);
-    border: 1px solid var(--primary); /* ✅ Added border on hover/active */
+    border: 1px solid var(--primary);
     box-shadow: 0 0 12px rgba(138, 43, 226, 0.4);
     opacity: 1;
     color: #fff;
 }
 
-/* ===== Toggle (Mobile) ===== */
+/* ===== Toggle (Mobile Hamburger Menu) ===== */
 .nav__toggle {
-    display: none;
+    display: none; /* Hidden by default, shown in media query */
     background: none;
     border: 0;
     padding: .6rem;
@@ -243,9 +297,11 @@ a {
     height: 3px;
     background: #fff;
     margin: 6px 0;
+    /* Transitions for the smooth X transformation */
     transition: transform var(--transition-speed) ease, opacity var(--transition-speed) ease;
 }
 
+/* Hamburger to X transform on active state */
 .nav__toggle.active .nav__bar:nth-child(1) {
     transform: translateY(9px) rotate(45deg);
 }
@@ -256,44 +312,48 @@ a {
     transform: translateY(-9px) rotate(-45deg);
 }
 
-/* ===== Scroll Progress ===== */
+/* ===== Scroll Progress Bar ===== */
 .progress {
     position: absolute;
-    inset: auto 0 0 0;
+    inset: auto 0 0 0; /* Aligns to the bottom of the navbar */
     height: 3px;
     background: linear-gradient(90deg, var(--primary), #4bd2ff);
-    width: 0%;
+    width: 0%; /* Initial state, controlled by JS */
 }
 
 
-/* ============ Hero ============ */
+/* ============ 5. Hero Section ============ */
 .hero {
     position: relative;
-    isolation: isolate;
-    padding: 140px 0 80px; /* More padding */
-    overflow: hidden; /* Crucial for circle animations */
+    isolation: isolate; /* Creates a new stacking context for Z-index control */
+    padding: 140px 0 80px;
+    overflow: hidden; /* Crucial to contain the animated circles and blobs */
 }
 
 .hero__grid {
     display: grid;
-    gap: 3rem; /* More gap */
+    gap: 3rem;
     align-items: center;
 }
 
+/* Eyebrow (Pre-heading) text */
 .hero__copy .eyebrow {
     color: #a9adff;
     text-transform: uppercase;
     font-weight: 800;
-    letter-spacing: .22em; /* More prominent */
+    letter-spacing: .22em;
     font-size: .8rem;
     margin-bottom: 0.8rem;
     display: block;
 }
 
+/* Main Hero Heading */
 .hero__copy h1 {
     font-size: clamp(2.8rem, 5.5vw, 4.8rem);
     line-height: 1.1;
     margin: 0.8rem 0 1.5rem;
+    
+    /* Initial state for slideReveal animation */
     opacity: 0;
     transform: translateX(-40px);
     animation: slideReveal 4s ease-out forwards;
@@ -302,7 +362,7 @@ a {
     overflow: hidden;
 }
 
-/* Smooth left-to-right reveal */
+/* Smooth left-to-right reveal (similar to text-reveal, but with movement) */
 @keyframes slideReveal {
     0% {
         opacity: 0;
@@ -321,12 +381,11 @@ a {
     }
 }
 
-/* Optional refinement for scroll-triggered animation */
+/* Optional refinement for scroll-triggered animation (for subsequent sections) */
 .hero__copy h1[data-animate="fade-up"] {
     opacity: 0;
     transform: translateX(-30px);
 }
-
 .hero__copy h1[data-animate="fade-up"].in-view {
     opacity: 1;
     transform: translateX(0);
@@ -334,23 +393,23 @@ a {
     transition-delay: 0.3s;
 }
 
-
-
-
+/* Gradient Text Utility */
 .grad {
-    background: linear-gradient(2deg, #a8b1ff, #4bd2ff);
+    background: linear-gradient(2deg, #a8b1ff, #4bd2ff); /* Blue/Purple gradient */
     font-size: smaller;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
 }
 
+/* Lead/Subtitle text */
 .lead {
-    font-size: clamp(1.1rem, 2vw, 1.35rem); /* Larger lead text */
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
     color: var(--muted);
     line-height: 1.8;
 }
-/* General in-view animation for lead, adjusted to avoid conflict with typing */
+
+/* General in-view animation for lead */
 .hero__copy .lead[data-animate="fade-up"] {
     transform: translateY(20px);
     opacity: 0;
@@ -359,12 +418,12 @@ a {
     transform: translateY(0);
     opacity: 1;
     transition: opacity .8s ease, transform .8s var(--bezier-ease);
-    transition-delay: .5s; /* Slightly after H1 */
+    transition-delay: .5s; /* Delays slightly after H1 */
 }
 
 
-/* Typing animation specific styles for the wrapper element (h1, p) */
-/* The JS will wrap the actual text content inside this */
+/* Typing animation specific styles - used as a wrapper for animated text content */
+/* Note: The actual typing is handled by JavaScript */
 
 
 /* Keyframes for blinking cursor */
@@ -373,11 +432,11 @@ a {
     50% { border-color: var(--primary); }
 }
 
-/* When typing is complete, remove the cursor animation */
+/* State when typing is complete */
 .typing-container.typed {
     border-right: none;
     animation: none;
-    white-space: normal; /* Allow text to wrap naturally after typing */
+    white-space: normal;
 }
 
 
@@ -385,9 +444,10 @@ a {
     display: flex;
     gap: 1rem;
     margin: 2rem 0 1.5rem;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Ensures buttons wrap on small screens */
 }
 
+/* Footer-style stats */
 .hero__stats {
     display: flex;
     gap: 1.5rem;
@@ -401,189 +461,200 @@ a {
     color: #fff;
 }
 
-/* ================================
-   HERO VISUAL (Optimized Circles)
-================================ */
+/* =================================
+   | HERO VISUAL (Optimized Circles) |
+   ================================= */
 
 .hero__visual {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  overflow: hidden; /* ✅ prevent outer overflow */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    overflow: hidden;
 }
 
+/* Inner image container with a border/glow effect */
 .img-circle {
-  width: clamp(260px, 38vw, 460px);
-  height: clamp(260px, 38vw, 460px);
-  border-radius: 50%;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(45deg, var(--primary), #4bd2ff);
-  box-shadow:
-    0 0 0 8px rgba(255, 255, 255, 0.1),
-    0 0 0 16px rgba(255, 255, 255, 0.05),
-    var(--shadow);
-  animation: pulseGlow 4s ease-in-out infinite alternate;
+    width: clamp(260px, 38vw, 460px);
+    height: clamp(260px, 38vw, 460px);
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Primary color gradient for the inner glow */
+    background: linear-gradient(45deg, var(--primary), #4bd2ff);
+    
+    /* Layered box shadow for a deep, pulsating glow */
+    box-shadow:
+        0 0 0 8px rgba(255, 255, 255, 0.1),
+        0 0 0 16px rgba(255, 255, 255, 0.05),
+        var(--shadow);
+    animation: pulseGlow 4s ease-in-out infinite alternate;
 }
 
 .hero__img {
-  width: 94%;
-  height: 94%;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 4px solid rgba(255, 255, 255, 0.2);
-  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.5);
+    width: 94%;
+    height: 94%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.5);
 }
 
-/* 🌐 Animated Circles */
+/* 🌐 Animated Concentric Circles */
 .circle {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.02);
-  box-shadow: 0 0 10px rgba(138, 43, 226, 0.25);
-  pointer-events: none;
-  z-index: -1;
-  animation: spin 22s linear forwards;
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.02);
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.25);
+    pointer-events: none; /* Allows clicks to pass through to content below */
+    z-index: -1;
+    animation: spin 22s linear forwards; /* Different durations for staggered spin */
 }
 
-/* ✅ Slightly reduced sizes */
+/* Positioning for concentric circles */
 .circle--1 {
-  width: 520px;
-  height: 520px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(0deg);
-  animation-delay: 0s;
+    width: 520px;
+    height: 520px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+    animation-delay: 0s;
 }
 
 .circle--2 {
-  width: 420px;
-  height: 420px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(0deg);
-  animation-delay: 2s;
-  animation-duration: 26s;
+    width: 420px;
+    height: 420px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0deg);
+    animation-delay: 2s;
+    animation-duration: 26s;
 }
 
 .circle--3 {
-  width: 620px;
-  height: 620px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(0deg);
-  animation-delay: 4s;
-  animation-duration: 30s;
-}
-
-/* ✅ Smooth spin animation */
-@keyframes spin {
-  from {
+    width: 620px;
+    height: 620px;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%) rotate(0deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
+    animation-delay: 4s;
+    animation-duration: 30s;
 }
 
-/* ✅ Soft pulse glow for center circle */
+/* Spin Animation */
+@keyframes spin {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Center Circle Pulse Glow Animation */
 @keyframes pulseGlow {
-  0% {
-    box-shadow:
-      0 0 0 8px rgba(255, 255, 255, 0.1),
-      0 0 0 16px rgba(255, 255, 255, 0.05),
-      var(--shadow);
-  }
-  50% {
-    box-shadow:
-      0 0 0 10px rgba(255, 255, 255, 0.2),
-      0 0 0 22px rgba(255, 255, 255, 0.1),
-      0 0 0 28px rgba(138, 43, 226, 0.15),
-      var(--shadow);
-  }
-  100% {
-    box-shadow:
-      0 0 0 8px rgba(255, 255, 255, 0.1),
-      0 0 0 16px rgba(255, 255, 255, 0.05),
-      var(--shadow);
-  }
+    0% {
+        box-shadow:
+            0 0 0 8px rgba(255, 255, 255, 0.1),
+            0 0 0 16px rgba(255, 255, 255, 0.05),
+            var(--shadow);
+    }
+    50% {
+        box-shadow:
+            0 0 0 10px rgba(255, 255, 255, 0.2),
+            0 0 0 22px rgba(255, 255, 255, 0.1),
+            0 0 0 28px rgba(138, 43, 226, 0.15), /* Accent color pulse */
+            var(--shadow);
+    }
+    100% {
+        box-shadow:
+            0 0 0 8px rgba(255, 255, 255, 0.1),
+            0 0 0 16px rgba(255, 255, 255, 0.05),
+            var(--shadow);
+    }
 }
 
-/* ✅ Blobs background - also slightly reduced */
+/* 🌀 Background Blobs (for diffused color light) */
 .blob {
-  position: absolute;
-  filter: blur(70px);
-  pointer-events: none;
-  z-index: -2;
-  opacity: 0.55;
-  animation: float 10s ease-in-out forwards;
+    position: absolute;
+    filter: blur(70px); /* Heavy blur is key to the effect */
+    pointer-events: none;
+    z-index: -2; /* Ensures they are behind all other content */
+    opacity: 0.55;
+    animation: float 10s ease-in-out forwards infinite alternate;
+    border-radius: 50%; /* Make them circular to start */
 }
 
 .blob--1 {
-  width: 420px;
-  height: 420px;
-  background: radial-gradient(circle at 30% 30%, #8a2be2a0, transparent 60%);
-  top: -120px;
-  left: -90px;
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle at 30% 30%, #8a2be2a0, transparent 60%); /* Purple/Primary */
+    top: -120px;
+    left: -90px;
 }
 
 .blob--2 {
-  width: 520px;
-  height: 520px;
-  background: radial-gradient(circle at 70% 40%, #00b7ff80, transparent 60%);
-  right: -120px;
-  bottom: -80px;
-  animation-delay: 1.5s;
-  animation-duration: 12s;
+    width: 520px;
+    height: 520px;
+    background: radial-gradient(circle at 70% 40%, #00b7ff80, transparent 60%); /* Cyan/Secondary */
+    right: -120px;
+    bottom: -80px;
+    animation-delay: 1.5s;
+    animation-duration: 12s;
 }
 
+/* Subtle floating movement for the blobs */
 @keyframes float {
-  0% {
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    transform: translateY(18px) scale(1.03);
-  }
-  100% {
-    transform: translateY(0) scale(1);
-  }
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(18px) scale(1.03);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
 }
 
 
-/* ============ Sections ============ */
+/* ============ 6. Sections & Headings ============ */
 .section {
-    padding: 100px 0; /* More padding */
+    padding: 100px 0;
 }
 
+/* Alternate dark background for sections */
 .section.alt {
-    background: linear-gradient(180deg, #0d1030, #0d103000); /* Keep dark alt background */
+    background: linear-gradient(180deg, #0d1030, #0d103000);
 }
 
+/* Common styling for section headers */
 .section__head {
-    max-width: 800px; /* Wider heading */
-    margin: 0 auto 48px; /* More margin */
+    max-width: 800px;
+    margin: 0 auto 48px;
     text-align: center;
 }
 
 .section__head h2 {
-    font-size: clamp(2rem, 3.8vw, 3.2rem); /* Larger heading */
+    font-size: clamp(2rem, 3.8vw, 3.2rem);
     color: #fff;
     margin-bottom: 1rem;
 }
 
+/* Utility for muted/secondary text blocks */
 .muted {
     color: var(--muted);
-    font-size: 1.1rem; /* Larger muted text */
+    font-size: 1.1rem;
     line-height: 1.7;
 }
 
+/* Utility for smaller text */
 .tiny {
-    font-size: .95rem; /* Slightly larger tiny text */
+    font-size: .95rem;
     color: #aeb2d9;
 }
 
@@ -591,59 +662,68 @@ a {
     text-align: center;
 }
 
-/* ============ Cards / Grid ============ */
+/* ============ 7. Cards / Grid Layouts ============ */
 .grid {
     display: grid;
-    gap: 1.8rem; /* More gap */
+    gap: 1.8rem;
 }
 
 .features__grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Larger min width */
+    /* Responsive grid: min column width of 280px */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 .card {
-    background: linear-gradient(180deg, #1c1c1c, #101010); /* Darker card background */
+    /* Subtle gradient for depth */
+    background: linear-gradient(180deg, #1c1c1c, #101010);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 1.8rem; /* More padding */
+    padding: 1.8rem;
     box-shadow: var(--shadow);
+    
+    /* Transitions for hover interactivity */
     transition: transform var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease;
 }
 
+/* Hover: Lift, subtle scale, primary border highlight, stronger shadow */
 .card:hover {
-    transform: translateY(-8px) scale(1.02); /* Lift and scale on hover */
-    border-color: var(--primary); /* Primary color border on hover */
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7); /* Stronger shadow */
-    background: linear-gradient(180deg, #1c1c1c, #1a1a1a); /* Slightly lighter on hover */
+    transform: translateY(-8px) scale(1.02);
+    border-color: var(--primary);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7);
+    background: linear-gradient(180deg, #1c1c1c, #1a1a1a);
 }
 
+/* Feature Card Icon Styling */
 .feature .icon {
-    font-size: 1.8rem; /* Larger icon */
-    background: rgba(138, 43, 226, 0.2); /* Primary color subtle background */
-    border: 1px solid var(--primary); /* Primary color border */
-    width: 54px; /* Larger icon container */
+    font-size: 1.8rem;
+    background: rgba(138, 43, 226, 0.2);
+    border: 1px solid var(--primary);
+    width: 54px;
     height: 54px;
     display: grid;
     place-items: center;
     border-radius: 14px;
     margin-bottom: 1rem;
-    color: var(--primary); /* Icon color */
+    color: var(--primary);
     box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
     transition: transform var(--transition-speed) ease;
 }
+/* Icon Hover Effect: Flip and solid background fill */
 .card:hover .feature .icon {
-    transform: rotateY(180deg) scale(1.1); /* Flip and scale icon */
+    transform: rotateY(180deg) scale(1.1);
     background: var(--primary);
     color: #fff;
 }
 
-/* ============ Marquee ============ */
+/* ============ 8. Marquee (Scrolling Ticker) ============ */
 .marquee {
     overflow: hidden;
     border-block: 1px solid var(--border);
     background: #0d0d0d;
-    padding: 20px 0; /* More vertical padding */
-    width: 100vw; /* Full screen width */
+    padding: 20px 0;
+    
+    /* Full-width container trick for content wider than viewport */
+    width: 100vw;
     position: relative;
     left: 50%;
     right: 50%;
@@ -653,10 +733,10 @@ a {
 
 .marquee__track {
     display: flex;
-    gap: 5rem; /* More gap */
-    white-space: nowrap;
-    animation: marquee 15s linear infinite; /* Faster animation */
-    font-size: 1.2rem; /* Larger text */
+    gap: 5rem;
+    white-space: nowrap; /* Forces content to stay on a single line */
+    animation: marquee 15s linear infinite;
+    font-size: 1.2rem;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.7);
 }
@@ -667,31 +747,34 @@ a {
     letter-spacing: 1px;
     position: relative;
 }
+/* Separator dot using pseudo-element */
 .marquee__track span:not(:last-child)::after {
     content: '•';
     position: absolute;
-    right: -2.5rem; /* Half of gap */
+    right: -2.5rem; /* Half of the gap to center it */
     color: var(--primary);
     font-size: 1.5em;
     top: 50%;
     transform: translateY(-50%);
 }
 
+/* Marquee Animation: moves content left by 100% of the track's content width */
 @keyframes marquee {
     from {
         transform: translateX(0%);
     }
     to {
-        transform: translateX(-100%); /* Move full width for seamless loop */
+        transform: translateX(-100%);
     }
 }
 
 
-/* ============ Pricing ============ */
+/* ============ 9. Pricing ============ */
 .price__grid {
+    /* Responsive grid with min column width of 300px */
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    align-items: stretch;
-    gap: 2rem; /* small spacing between cards for mobile */
+    align-items: stretch; /* Ensures cards have equal height */
+    gap: 2rem;
 }
 
 .price {
@@ -699,14 +782,16 @@ a {
     border: 2px solid transparent;
     position: relative;
     border-radius: 1rem;
-    text-align: center; /* better alignment for narrow screens */
-    overflow: hidden; /* prevents overflow for large text */
-    word-wrap: break-word; /* allow wrapping for long content */
+    text-align: center;
+    overflow: hidden;
+    word-wrap: break-word;
+    /* Inherits base card styling implicitly but adds specific price styling */
 }
 
+/* Featured pricing card styling */
 .price:first-of-type {
     border-color: var(--primary);
-    box-shadow: 0 0 25px rgba(138, 43, 226, 0.4), var(--shadow);
+    box-shadow: 0 0 25px rgba(138, 43, 226, 0.4), var(--shadow); /* Accent glow */
     background: linear-gradient(180deg, #1c1c1c, #151515);
 }
 
@@ -717,14 +802,15 @@ a {
     margin-bottom: 1rem;
 }
 
+/* Price value display */
 .price__value {
     font-weight: 900;
-    font-size: 2.5rem; /* slightly reduced for balance */
+    font-size: 2.5rem;
     margin: .6rem 0 1.5rem;
     color: var(--primary);
     line-height: 1.1;
     display: flex;
-    flex-wrap: wrap; /* wraps if text is too wide */
+    flex-wrap: wrap;
     justify-content: center;
     align-items: baseline;
     gap: 0.2rem;
@@ -732,16 +818,17 @@ a {
 }
 
 .price__value .cur {
-    font-size: 0.6em;
+    font-size: 0.6em; /* Smaller currency symbol */
     opacity: 0.8;
 }
 
 .price__value .unit {
-    font-size: 0.5em;
+    font-size: 0.5em; /* Smaller unit (e.g., /month) */
     opacity: 0.7;
     font-weight: 600;
 }
 
+/* Feature list styling */
 .price .list {
     list-style: none;
     padding: 0;
@@ -759,14 +846,14 @@ a {
 }
 
 .price .list li::before {
-    content: '✅';
+    content: '✅'; /* Custom checkmark */
     font-size: 1.2em;
 }
 
-/* ✅ Responsive fix for small screens */
+/* Responsive fix for small screens */
 @media (max-width: 480px) {
     .price__value {
-        font-size: 2rem; /* reduce font size */
+        font-size: 2rem;
     }
     .price {
         padding: 1.8rem;
@@ -774,16 +861,14 @@ a {
 }
 
 
-
-/* ============ Gallery ============ */
+/* ============ 10. Gallery / Lightbox ============ */
 /* Gallery Grid */
 .gallery__grid {
-    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 1.5rem;
 }
 
-/* Gallery Item */
+/* Gallery Item Styling and Hover Effect */
 .gallery__item {
     overflow: hidden;
     border-radius: 16px;
@@ -801,10 +886,10 @@ a {
 }
 
 .gallery__item:hover img {
-    transform: scale(1.05);
+    transform: scale(1.05); /* Zoom effect on hover */
 }
 
-/* Fullscreen Overlay */
+/* Fullscreen Overlay (Lightbox) */
 .fullscreen-overlay {
     position: fixed;
     inset: 0;
@@ -814,6 +899,8 @@ a {
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    
+    /* Initial state (hidden) */
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.4s ease;
@@ -824,7 +911,7 @@ a {
     pointer-events: auto;
 }
 
-/* Fullscreen Container */
+/* Fullscreen Image Container for centered scaling */
 .fullscreen-image-container {
     position: relative;
     max-width: 90vw;
@@ -832,6 +919,8 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+    
+    /* Initial state (for transition) */
     transform: scale(0.95);
     opacity: 0;
     transition: transform 0.4s ease, opacity 0.4s ease;
@@ -842,7 +931,7 @@ a {
     opacity: 1;
 }
 
-/* Fullscreen Image */
+/* Fullscreen Image properties */
 .fullscreen-image {
     width: 100%;
     height: auto;
@@ -852,7 +941,7 @@ a {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
 }
 
-/* Close Button */
+/* Close Button Styling */
 .close-btn {
     position: absolute;
     top: 15px;
@@ -870,53 +959,53 @@ a {
 
 .close-btn:hover {
     background: rgba(255, 255, 255, 0.5);
-    transform: rotate(90deg);
+    transform: rotate(90deg); /* Subtle animated feedback */
 }
 
-/* Responsive Fixes */
+/* Responsive Fixes for Lightbox */
 @media (max-width: 768px) {
     .fullscreen-image-container {
         max-width: 95vw;
         max-height: 80vh;
     }
-
     .fullscreen-image {
         max-height: 75vh;
     }
 }
 
 
-
-/* ============ Testimonials ============ */
+/* ============ 11. Testimonials (Carousel) ============ */
 .carousel {
     position: relative;
-    min-height: 180px;
+    min-height: 180px; /* Ensures space is reserved even when quotes are absolute */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .quote {
+    /* Initial state for transition */
     opacity: 0;
     transform: translateY(20px) scale(0.95);
-    transition: opacity .4s ease, transform .4s ease; /* Changed from .6s to .4s for faster animation */
+    transition: opacity .4s ease, transform .4s ease;
+    
     text-align: center;
     color: #d7dbff;
     font-size: 1.3rem;
     max-width: 800px;
     margin: 0 auto;
     line-height: 1.8;
+    
+    /* Absolute positioning for carousel transition stacking */
     position: absolute;
     width: 100%;
 }
 
-
-
+/* Active state for visible quote */
 .quote.active {
     opacity: 1;
     transform: translateY(0) scale(1);
-    position: relative;
-
+    position: relative; /* Returns to document flow when active */
 }
 
 .quote cite {
@@ -928,16 +1017,18 @@ a {
     font-size: 1.1rem;
 }
 
-/* ============ Accordion ============ */
+/* ============ 12. Accordion (FAQ) ============ */
 .acc {
+    /* Card-like styling for each FAQ item */
     background: linear-gradient(180deg, #1c1c1c, #101010);
     border: 1px solid var(--border);
-    border-radius: 18px; /* Larger radius */
-    padding: 1.5rem; /* More padding */
-    margin: 1rem 0; /* More margin */
+    border-radius: 18px;
+    padding: 1.5rem;
+    margin: 1rem 0;
     box-shadow: var(--shadow);
     transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease;
 }
+/* Subtle hover effect */
 .acc:hover {
     background: linear-gradient(180deg, #1a1a1a, #0d0d0d);
     border-color: var(--primary);
@@ -946,21 +1037,23 @@ a {
 .acc summary {
     cursor: pointer;
     font-weight: 700;
-    font-size: 1.15rem; /* Larger summary text */
+    font-size: 1.15rem;
     padding: 0.5rem 0;
     color: #e0e0e0;
-    outline: none; /* Remove default focus outline */
+    outline: none;
     position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: color var(--transition-speed) ease;
 }
+/* Hide default browser details arrow */
 .acc summary::-webkit-details-marker {
-    display: none; /* Hide default arrow */
+    display: none;
 }
+/* Custom plus icon for closed state */
 .acc summary::after {
-    content: '+'; /* Custom plus icon */
+    content: '+';
     font-size: 1.8em;
     font-weight: 300;
     line-height: 1;
@@ -969,37 +1062,41 @@ a {
     transition: transform var(--transition-speed) ease;
 }
 
+/* Open state styling */
 .acc[open] summary {
     color: var(--primary);
-
 }
+/* Custom minus icon for open state */
 .acc[open] summary::after {
-    content: '-'; /* Custom minus icon */
-    transform: rotate(0deg);
+    content: '-';
+    transform: rotate(0deg); /* Plus sign stays plus, so rotate isn't needed here for minus */
 }
+
 .acc p {
     padding-top: 1rem;
     font-size: 1.05rem;
     color: var(--muted);
     line-height: 1.7;
-    border-top: 1px solid rgba(255,255,255,0.05); /* Separator */
+    border-top: 1px solid rgba(255,255,255,0.05); /* Content separator */
     margin-top: 1rem;
 }
 
 
-/* ============ CTA / Contact ============ */
+/* ============ 13. CTA / Contact Form ============ */
 .cta .container[data-glass] {
-    background: linear-gradient(135deg, rgba(138, 43, 226, 0.15), rgba(0, 183, 255, 0.1)); /* Gradient glass effect */
+    /* Prominent Glassmorphism/Neon container */
+    background: linear-gradient(135deg, rgba(138, 43, 226, 0.15), rgba(0, 183, 255, 0.1));
     border: 1px solid var(--border);
-    border-radius: 28px; /* Larger radius */
-    padding: 40px; /* More padding */
+    border-radius: 28px;
+    padding: 40px;
+    /* Strong shadow and outer glow */
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.7), 0 0 0 10px rgba(138, 43, 226, 0.1);
     backdrop-filter: blur(10px);
 }
 
 .cta__grid {
     display: grid;
-    gap: 2.5rem; /* More gap */
+    gap: 2.5rem;
     align-items: start;
 }
 
@@ -1009,6 +1106,7 @@ a {
     margin-bottom: 1rem;
 }
 
+/* Contact information list */
 .contact__list {
     list-style: none;
     padding: 0;
@@ -1023,6 +1121,7 @@ a {
     color: #fff;
     font-weight: 600;
 }
+/* Links inside the contact list */
 .contact__list li a {
     color: var(--primary);
     text-decoration: underline;
@@ -1032,19 +1131,23 @@ a {
     color: #fff;
 }
 
-
+/* Form element styling */
 input,
 textarea {
     background: #1a1a1a;
     color: #fff;
     border: 1px solid var(--border);
-    padding: 1.1rem 1.1rem; /* More padding */
-    border-radius: 14px; /* Larger radius */
+    padding: 1.1rem 1.1rem;
+    border-radius: 14px;
     outline: none;
     transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
     font-size: 1rem;
+    display: block; /* Ensure inputs take up full width of parent */
+    width: 100%;
+    margin-bottom: 1.5rem;
 }
 
+/* Focus state: Primary color outline */
 input:focus,
 textarea:focus {
     border-color: var(--primary);
@@ -1053,13 +1156,13 @@ textarea:focus {
 
 textarea {
     min-height: 150px;
-    resize: vertical;
+    resize: vertical; /* Only allow vertical resizing */
 }
 
-/* ============ Footer ============ */
+/* ============ 14. Footer ============ */
 .footer {
     border-top: 1px solid var(--border);
-    padding: 32px 0; /* More padding */
+    padding: 32px 0;
     background: #0d0d0d;
 }
 
@@ -1076,10 +1179,11 @@ textarea {
     color: var(--muted);
 }
 
+/* Back-to-Top Button */
 .to-top {
     display: inline-grid;
     place-items: center;
-    width: 44px; /* Larger button */
+    width: 44px;
     height: 44px;
     border-radius: 12px;
     border: 1px solid var(--border);
@@ -1089,26 +1193,27 @@ textarea {
     transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease, transform var(--transition-speed) ease;
 }
 
+/* Back-to-Top Hover Effect */
 .to-top:hover {
     background: rgba(138, 43, 226, 0.2);
     border-color: var(--primary);
-    transform: translateY(-3px);
+    transform: translateY(-3px); /* Subtle lift */
     color: #fff;
 }
 
 
-/* ============ On-Scroll Animations (no heavy libs) ============ */
-/* Initial state for elements that will animate */
+/* ============ 15. On-Scroll Animations (Intersection Observer) ============ */
+/* Initial state for elements that will animate on scroll */
 [data-animate] {
     opacity: 0;
-    transform: translateY(20px);
-    will-change: transform, opacity;
-    transition: opacity .8s ease, transform .8s var(--bezier-ease); /* Set a default transition */
+    transform: translateY(20px); /* Default 'fade-up' movement */
+    will-change: transform, opacity; /* Optimization hint for the browser */
+    transition: opacity .8s ease, transform .8s var(--bezier-ease);
 }
 
-/* Overrides for specific animation types if needed */
+/* Overrides for specific animation types */
 [data-animate="fade-in"] {
-    transform: none; /* No initial vertical movement for fade-in */
+    transform: none; /* Only opacity change */
 }
 [data-animate="zoom-in"] {
     transform: scale(.9);
@@ -1117,18 +1222,19 @@ textarea {
     transform: scale(.95);
 }
 [data-animate="reveal"] {
+    /* Use clip-path for a sweeping reveal effect */
     clip-path: inset(0 0 100% 0);
-    opacity: 1; /* Keep opacity at 1 for reveal, as clip-path handles visibility */
+    opacity: 1; /* Clip-path controls visibility, not opacity */
 }
 
 
-/* Final state for elements when in view */
+/* Final state for elements when they enter the viewport (.in-view class added by JS) */
 .in-view {
-    opacity: 1 !important; /* Ensure opacity override */
-    transform: none !important; /* Reset transform */
+    opacity: 1 !important;
+    transform: none !important; /* Resets translateY/scale for fade-up/zoom */
 }
 
-/* Specific in-view animations */
+/* Specific in-view animation finishes */
 .in-view[data-animate="reveal"] {
     clip-path: inset(0 0 0 0);
     transition: clip-path 1s var(--bezier-ease);
@@ -1139,48 +1245,58 @@ textarea {
 .in-view[data-animate="scale-in"] {
     transform: scale(1);
 }
-/* Note: fade-up/slide-up already handled by default [data-animate] and .in-view */
 
 
-/* ============ Utilities ============ */
+/* ============ 16. Utilities ============ */
+/* 3D tilt effect on hover */
 .tilt:hover {
-    transform: perspective(1000px) rotateX(4deg) rotateY(-4deg) scale(1.02); /* Stronger tilt */
+    transform: perspective(1000px) rotateX(4deg) rotateY(-4deg) scale(1.02);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
 }
 
+/* Ensures elements with the hidden attribute are properly hidden */
 [hidden] {
     display: none !important;
 }
 
 
-/* ============ Responsive ============ */
+/* ============ 17. Responsive Design (Media Queries) ============ */
+
+/* Tablet & Mobile Styles (Max width 900px) */
 @media (max-width: 900px) {
+    /* Navbar Toggle */
     .nav__toggle {
-        display: block;
+        display: block; /* Show hamburger button */
     }
 
+    /* Mobile Menu Dropdown */
     .nav__links {
         position: fixed;
-        inset: 80px 16px auto 16px; /* More inset */
-        background: #000000e0; /* Darker overlay */
+        /* Positioned slightly below the navbar and contained on the sides */
+        inset: 80px 16px auto 16px;
+        background: #000000e0;
         border: 1px solid var(--border);
         padding: 15px;
         border-radius: 20px;
-        display: grid;
+        display: grid; /* Stack links vertically */
         gap: .5rem;
         transform-origin: top right;
-        scale: .95; /* Smaller scale */
+        
+        /* Initial state for mobile menu transition */
+        scale: .95;
         opacity: 0;
         pointer-events: none;
         transition: opacity var(--transition-speed) ease, scale var(--transition-speed) ease;
     }
 
+    /* Mobile Menu Active State */
     .nav__links.show {
         opacity: 1;
         scale: 1;
         pointer-events: auto;
     }
 
+    /* Footer: Stacked content and move 'to-top' button to the top of the stack */
     .footer__inner {
         flex-direction: column;
         text-align: center;
@@ -1193,6 +1309,7 @@ textarea {
         order: 1;
     }
 
+    /* Hero Section: Stack content vertically and center text */
     .hero__grid {
         grid-template-columns: 1fr;
         text-align: center;
@@ -1204,21 +1321,28 @@ textarea {
         justify-content: center;
     }
 
+    /* CTA Section: Stack content vertically */
     .cta__grid {
         grid-template-columns: 1fr;
     }
 }
 
+/* Desktop & Larger Tablet Styles (Min width 900px) */
 @media (min-width: 900px) {
+    /* Hero Grid: 1.2/1 column split for copy and visual */
     .hero__grid {
         grid-template-columns: 1.2fr 1fr;
     }
 
+    /* CTA Grid: 1.1/.9 column split for copy and form/contact */
     .cta__grid {
         grid-template-columns: 1.1fr .9fr;
     }
 }
 
+
+/* ============ 18. Accessibility (Reduced Motion) ============ */
+/* Disable all animations and smooth scrolling for users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
     * {
         animation: none !important;
