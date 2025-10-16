@@ -1084,80 +1084,133 @@ a {
 
 /* ============ 13. CTA / Contact Form ============ */
 .cta .container[data-glass] {
-    /* Prominent Glassmorphism/Neon container */
-    background: linear-gradient(135deg, rgba(138, 43, 226, 0.15), rgba(0, 183, 255, 0.1));
-    border: 1px solid var(--border);
-    border-radius: 28px;
-    padding: 40px;
-    /* Strong shadow and outer glow */
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7), 0 0 0 10px rgba(138, 43, 226, 0.1);
-    backdrop-filter: blur(10px);
+  /* Prominent Glassmorphism/Neon container */
+  background: linear-gradient(135deg, rgba(138, 43, 226, 0.15), rgba(0, 183, 255, 0.1));
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 40px;
+  /* Strong shadow and outer glow */
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7), 0 0 0 10px rgba(138, 43, 226, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 .cta__grid {
-    display: grid;
-    gap: 2.5rem;
-    align-items: start;
+  display: grid;
+  gap: 2.5rem;
+  align-items: start;
 }
 
 .cta__copy h2 {
-    font-size: clamp(2.2rem, 4vw, 3.5rem);
-    color: #fff;
-    margin-bottom: 1rem;
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.cta__copy p.muted {
+  font-size: 1.1rem;
+  color: var(--muted);
 }
 
 /* Contact information list */
 .contact__list {
-    list-style: none;
-    padding: 0;
-    margin-top: 2rem;
+  list-style: none;
+  padding: 0;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
 }
 .contact__list li {
-    padding: 0.6rem 0;
-    font-size: 1.1rem;
-    color: var(--muted);
+  padding: 0.6rem 0;
+  font-size: 1.1rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .contact__list li strong {
-    color: #fff;
-    font-weight: 600;
+  color: #fff;
+  font-weight: 600;
 }
 /* Links inside the contact list */
 .contact__list li a {
-    color: var(--primary);
-    text-decoration: underline;
-    transition: color var(--transition-speed) ease;
+  color: var(--primary);
+  text-decoration: underline;
+  transition: color var(--transition-speed) ease;
 }
 .contact__list li a:hover {
-    color: #fff;
+  color: #fff;
 }
 
 /* Form element styling */
 input,
 textarea {
-    background: #1a1a1a;
-    color: #fff;
-    border: 1px solid var(--border);
-    padding: 1.1rem 1.1rem;
-    border-radius: 14px;
-    outline: none;
-    transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-    font-size: 1rem;
-    display: block; /* Ensure inputs take up full width of parent */
-    width: 100%;
-    margin-bottom: 1.5rem;
+  background: #1a1a1a;
+  color: #fff;
+  border: 1px solid var(--border);
+  padding: 1.1rem 1.1rem;
+  border-radius: 14px;
+  outline: none;
+  transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  font-size: 1rem;
+  display: block;
+  width: 100%;
+  margin-bottom: 1.5rem;
 }
 
 /* Focus state: Primary color outline */
 input:focus,
 textarea:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.3);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.3);
 }
 
 textarea {
-    min-height: 150px;
-    resize: vertical; /* Only allow vertical resizing */
+  min-height: 150px;
+  resize: vertical;
 }
+
+/* =================== WHATSAPP BUTTON STYLE =================== */
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #25d366, #1ebe57);
+  color: #fff;
+  font-weight: 600;
+  padding: 14px 26px;
+  border-radius: 50px;
+  text-decoration: none;
+  margin-top: 1.5rem;
+  box-shadow: 0 0 20px rgba(37, 211, 102, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+}
+
+.whatsapp-btn img {
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.3));
+}
+
+.whatsapp-btn:hover {
+  background: linear-gradient(135deg, #1ebe57, #25d366);
+  box-shadow: 0 0 30px rgba(37, 211, 102, 0.8);
+  transform: translateY(-3px);
+}
+
+/* Subtle entry animation for the whole box */
+[data-animate="fade-up"] {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUpSection 0.8s ease forwards;
+}
+@keyframes fadeUpSection {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 /* ============ 14. Footer ============ */
 .footer {
